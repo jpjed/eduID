@@ -11,12 +11,6 @@ asset StudentIdentity identified by assetKey {
   o Double gpa
   o Boolean decision
   o Double satScore
-  /**
-  --> String gpa
-  --> String satScores
-  --> String collegeDecision
-  */
-  
 
 }
 
