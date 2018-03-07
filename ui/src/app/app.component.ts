@@ -22,8 +22,9 @@ export class AppComponent implements OnInit {
   gpa;
   satScore;
 
-  // studentKey = '' +  Math.floor(Math.random() * Math.floor(10000));
-  studentKey = '6547';
+  studentKey = '' +  Math.floor(Math.random() * Math.floor(10000));
+  
+  assetKey = '' +  Math.floor(Math.random() * Math.floor(10000))
 
   ngOnInit() {
     // let id = '6704';
@@ -39,16 +40,19 @@ export class AppComponent implements OnInit {
 
   refreshData() {
     this.refreshed = false;
-    this.dataService.getStudentIdentity().subscribe(x => {
+    console.log('assetKey');
+    console.log(this.assetKey)
+    this.dataService.getStudentIdentity(this.assetKey).subscribe(x => {
       console.log('success...')
       console.log(x)
-      for (let i = 0; i < x.length; i++) {
-        if (x[i].owner.studentKey === this.studentKey) {
-          this.gpa = x[i].gpa;
-          this.satScore = x[i].satScore;
+      // for (let i = 0; i < x.length; i++) {
+      //   if (x[i].owner.studentKey === this.studentKey) {
+      //   // if (x[i].owner.studentKey === '6547') {
+          this.gpa = x.gpa;
+          this.satScore = x.satScore;
 
-        } 
-      }
+      //   } 
+      // }
 
       this.refreshed = true;
 
@@ -61,7 +65,7 @@ export class AppComponent implements OnInit {
   }
 
   submitForm() {
-    let data = {
+    let participantData = {
       "$class": "org.acme.model.Student",
       "name": this.name,
       "address": this.address,
@@ -71,11 +75,28 @@ export class AppComponent implements OnInit {
     }
 
     console.log('submitForm...')
-    console.log(data)
+    console.log(participantData)
 
-    this.dataService.createStudent(data).subscribe(x => {
+    this.dataService.createStudent(participantData).subscribe(x => {
       console.log('success...')
       console.log(x)
+      let identityData = {
+        "$class": "org.acme.model.StudentIdentity",
+        "owner": participantData,
+        "assetKey": this.assetKey,
+        "gpa": 0,
+        "decision": false,
+        "satScore": 0
+      }
+      this.dataService.createStudentIdentity(identityData).subscribe(x => {
+        console.log('success pt.2 ...')
+        console.log(x)
+      },
+      error => {
+        console.log('error...')
+        console.log(error)
+      }
+      );
       this.secondScreen = true;
       this.refreshed = true;
     }, 

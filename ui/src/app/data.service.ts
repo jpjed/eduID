@@ -32,10 +32,31 @@ export class DataService {
 
     } 
 
-    getStudentIdentity(): Observable<any> {
+    createStudentIdentity(data): Observable<any> {
         /* tslint:disable */
-        let id = '3282';
 		const url = "http://52.170.82.100:3000/api/StudentIdentity/";
+        /* tslint:enable */
+        
+        let myHeaders = new Headers({accept: 'application/json'});
+        myHeaders.append('Access-Control-Allow-Origin', '*')
+        
+        const reqOptions = new RequestOptions({
+			url: url,
+			method: RequestMethod.Post,
+            headers: myHeaders,
+            body: data
+		});
+
+		const req = new Request(reqOptions);
+
+		return this.http.request(req)
+			.map((response: Response) => response.json())
+			.catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    } 
+
+    getStudentIdentity(id): Observable<any> {
+        /* tslint:disable */
+		const url = "http://52.170.82.100:3000/api/StudentIdentity/" + id;
 		/* tslint:enable */
 
 		const reqOptions = new RequestOptions({
