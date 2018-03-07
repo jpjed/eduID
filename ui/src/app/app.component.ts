@@ -12,14 +12,18 @@ export class AppComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   secondScreen = false;
-  
+  refreshed = false;
+
   name; 
   address; 
   dob;
   email;
 
-  studentKey = '' +  Math.floor(Math.random() * Math.floor(10000));
-  // studentKey = '1235';
+  gpa;
+  satScore;
+
+  // studentKey = '' +  Math.floor(Math.random() * Math.floor(10000));
+  studentKey = '6547';
 
   ngOnInit() {
     // let id = '6704';
@@ -34,7 +38,26 @@ export class AppComponent implements OnInit {
   }
 
   refreshData() {
-    
+    this.refreshed = false;
+    this.dataService.getStudentIdentity().subscribe(x => {
+      console.log('success...')
+      console.log(x)
+      for (let i = 0; i < x.length; i++) {
+        if (x[i].owner.studentKey === this.studentKey) {
+          this.gpa = x[i].gpa;
+          this.satScore = x[i].satScore;
+
+        } 
+      }
+
+      this.refreshed = true;
+
+    }, 
+    error => {
+      console.log('error...')
+      console.log(error)
+    }
+    )
   }
 
   submitForm() {
@@ -54,6 +77,7 @@ export class AppComponent implements OnInit {
       console.log('success...')
       console.log(x)
       this.secondScreen = true;
+      this.refreshed = true;
     }, 
     error => {
       console.log('error...')

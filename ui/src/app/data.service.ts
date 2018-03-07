@@ -35,7 +35,7 @@ export class DataService {
     getStudentIdentity(): Observable<any> {
         /* tslint:disable */
         let id = '3282';
-		const url = "http://52.170.82.100:3000/api/StudentIdentity/" + id;
+		const url = "http://52.170.82.100:3000/api/StudentIdentity/";
 		/* tslint:enable */
 
 		const reqOptions = new RequestOptions({

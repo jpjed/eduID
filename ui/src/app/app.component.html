@@ -37,11 +37,11 @@
       <div class="container-table100">
         <div class="wrap-table100">
             <div class="container-contact100-form-btn">
-                <button class="contact100-form-btn" (click)="submitForm($event)">
+                <button class="contact100-form-btn" (click)="refreshData($event)">
                   Refresh Data
                 </button>
               </div>
-            <div class="table">
+            <div class="table" *ngIf="refreshed">
               
               <div class="row header">
                 <div class="cell">
@@ -106,6 +106,16 @@
                   </div>
                 </div>
   
+                <div class="row">
+                    <div class="cell" data-title="Full Name">
+                      SAT Scores
+                    </div>
+                    <div class="cell" data-title="Job Title">
+                      {{satScore}}
+                    </div>
+                  </div>
+    
+
             </div>
         </div>
       </div>
