@@ -10,6 +10,7 @@ asset StudentIdentity identified by assetKey {
   o String assetKey
   o Double gpa
   o Boolean decision
+  o Double satScore
   /**
   --> String gpa
   --> String satScores
@@ -37,6 +38,10 @@ participant University identified by universityKey {
   o String universityKey
 }
 
+participant BoardOfEducation identified by boeKey {
+  o String boeKey
+}
+
 
 /**
   * Transactions
@@ -56,4 +61,10 @@ transaction UpdateIdentityByUniversity {
   --> StudentIdentity identity
   --> University university
   o Boolean decision
+}
+
+transaction UpdateIdentityByBoardOfEducation {
+  --> StudentIdentity identity
+  --> BoardOfEducation boardOfEducation
+  o Integer satScore
 }
